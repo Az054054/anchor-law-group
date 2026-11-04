@@ -210,21 +210,21 @@ footer .disc{max-width:620px}
 <script>
 document.getElementById('y').textContent = new Date().getFullYear();
 var TO = 'anchorlawgroup@proton.me';
+var KEY = 'cc810c5e-469d-4b3e-9057-c5b07fa9f6f7';
 document.getElementById('f').addEventListener('submit', function(e){
   e.preventDefault();
   var f = e.target, note = document.getElementById('note'), btn = document.getElementById('send');
   var data = {
-    name: f.name.value, email: f.email.value, phone: f.phone.value, message: f.message.value,
-    _honey: f._honey.value, _subject: 'New website inquiry from ' + f.name.value,
-    _replyto: f.email.value, _template: 'table'
+    access_key: KEY, name: f.name.value, email: f.email.value, phone: f.phone.value, message: f.message.value,
+    botcheck: f._honey.value, subject: 'New website inquiry from ' + f.name.value, from_name: 'Anchor Law Group website'
   };
   btn.disabled = true; note.textContent = 'Sending...';
-  fetch('https://formsubmit.co/ajax/' + TO, {
+  fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
     body: JSON.stringify(data)
   }).then(function(r){ return r.json(); }).then(function(j){
-    if (j.success === true || j.success === 'true') {
+    if (j.success === true) {
       note.textContent = 'Thank you. Your message was sent and we will contact you soon.';
       f.reset();
     } else { throw new Error('failed'); }
